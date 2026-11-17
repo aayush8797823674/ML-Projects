@@ -5,18 +5,21 @@
 This project focuses on predicting employee turnover using Machine Learning. It uses **Logistic Regression** to identify whether an employee is likely to stay with or leave an organization.
 
 The project compares three Logistic Regression approaches:
+
 - Baseline Logistic Regression
 - Logistic Regression with L1 Regularization (Lasso)
 - Logistic Regression with L2 Regularization (Ridge)
 
-The objective is to evaluate model performance using classification metrics and understand how regularization affects predictions.
+The main objective is to evaluate model performance, understand the impact of regularization, and identify the best-performing model.
 
 ## Tools & Technologies
 
 - **Python** – Programming language
-- **Pandas & NumPy** – Data manipulation and analysis
-- **Matplotlib & Seaborn** – Data visualization
-- **Scikit-learn** – Machine Learning, preprocessing and model evaluation
+- **Pandas** – Data manipulation and analysis
+- **NumPy** – Numerical computations
+- **Matplotlib** – Data visualization
+- **Seaborn** – Statistical visualization
+- **Scikit-learn** – Machine Learning and model evaluation
 - **Jupyter Notebook** – Development environment
 
 ## Project Structure
@@ -27,18 +30,32 @@ The objective is to evaluate model performance using classification metrics and 
 ├── Employee_Turnover.ipynb
 ├── employee_turnover.csv
 ├── requirements.txt
-└── README.md
+├── README.md
+│
+└── images/
+    ├── .gitkeep
+    ├── turnover_distribution.png
+    ├── baseline_confusion_matrix.png
+    ├── l1_confusion_matrix.png
+    ├── l2_confusion_matrix.png
+    └── model_comparison.png
 ```
 
 ## Dataset Information
 
-- **Initial Records:** 1,350
-- **Duplicate Records Removed:** 450
-- **Final Records:** 900
-- **Input Features:** 15
-- **Target Variable:** `Employee_Turnover`
+The dataset contains employee-related information used to predict employee turnover.
+
+| Dataset Detail | Value |
+|---|---:|
+| Initial Records | 1,350 |
+| Duplicate Records Removed | 450 |
+| Final Records | 900 |
+| Input Features | 15 |
+| Target Variable | Employee_Turnover |
 
 ### Target Variable
+
+The target variable is `Employee_Turnover`.
 
 | Value | Meaning |
 |---|---|
@@ -47,73 +64,84 @@ The objective is to evaluate model performance using classification metrics and 
 
 ### Features Used
 
-The dataset contains employee-related features such as:
+The dataset includes the following features:
 
-- Job Satisfaction
-- Performance Rating
-- Years at Company
-- Work-Life Balance
-- Distance From Home
-- Monthly Income
-- Education Level
-- Age
-- Number of Companies Worked
-- Employee Role
-- Annual Bonus
-- Training Hours
-- Department
-- Annual Bonus Squared
-- Annual Bonus–Training Hours Interaction
+1. Job_Satisfaction
+2. Performance_Rating
+3. Years_At_Company
+4. Work_Life_Balance
+5. Distance_From_Home
+6. Monthly_Income
+7. Education_Level
+8. Age
+9. Num_Companies_Worked
+10. Employee_Role
+11. Annual_Bonus
+12. Training_Hours
+13. Department
+14. Annual_Bonus_Squared
+15. Annual_Bonus_Training_Hours_Interaction
 
 ## Project Workflow
 
 ### 1. Data Loading & Exploration
+
 - Loaded the dataset using Pandas.
-- Inspected dataset structure and data types.
+- Inspected dataset structure, data types, and dimensions.
 - Used descriptive statistics to understand feature distributions.
 - Examined the target variable distribution.
 
 ### 2. Data Cleaning
-- Identified 450 duplicate records.
-- Removed duplicate rows using `drop_duplicates()`.
-- Checked missing values.
-- No missing values were found in the cleaned dataset.
 
-### 3. Feature & Target Separation
-- Separated 15 input features into `X`.
-- Selected `Employee_Turnover` as the target variable `y`.
+- Identified duplicate records.
+- Removed 450 duplicate records.
+- Checked missing values.
+- Inspected the cleaned dataset.
+
+### 3. Feature Engineering
+
+- Separated independent variables and the target variable.
+- Used the available engineered features, including Annual Bonus Squared and Annual Bonus–Training Hours Interaction.
 
 ### 4. Train-Test Split
-- Training data: 80% (720 records)
-- Testing data: 20% (180 records)
-- Used `random_state=42`.
-- Applied stratified sampling to preserve class proportions.
+
+The dataset was divided into training and testing sets.
+
+- Training Data: 80% (720 records)
+- Testing Data: 20% (180 records)
+- Random State: 42
+- Stratified sampling was used to preserve target class proportions.
 
 ### 5. Feature Scaling
-Applied `StandardScaler` to standardize the features.
 
-The scaler was fitted on training data and then applied to testing data to avoid data leakage during preprocessing.
+Applied `StandardScaler` to standardize numerical features.
+
+The scaler was fitted on the training data and then applied to the testing data to avoid data leakage.
 
 ### 6. Model Building
 
-Three Logistic Regression models were trained and evaluated.
+Three Logistic Regression models were implemented.
 
 **Baseline Logistic Regression**
-- No regularization penalty.
+
 - Used as the reference model.
+- No regularization penalty was applied.
 
 **L1 Regularization (Lasso)**
+
 - Uses L1 penalty.
 - Can reduce some feature coefficients to zero.
-- One feature coefficient became zero in this experiment.
+- Helps perform feature selection.
 
 **L2 Regularization (Ridge)**
+
 - Uses L2 penalty.
-- Shrinks coefficients while generally retaining all features.
+- Shrinks model coefficients.
+- Helps control model complexity.
 
 ### 7. Model Evaluation
 
-Models were evaluated using:
+The models were evaluated using:
 
 - Accuracy
 - Precision
@@ -122,9 +150,17 @@ Models were evaluated using:
 - Confusion Matrix
 - Classification Report
 
+## Exploratory Data Analysis
+
+### Employee Turnover Distribution
+
+The following chart shows the distribution of employees who stayed and employees who left.
+
+![Employee Turnover Distribution](images/turnover_distribution.png)
+
 ## Model Performance
 
-The following results were obtained from the notebook's 180-record test set.
+The following table compares the performance of all three Logistic Regression models on the test dataset.
 
 | Model | Accuracy | Precision | Recall | F1-Score |
 |---|---:|---:|---:|---:|
@@ -132,50 +168,68 @@ The following results were obtained from the notebook's 180-record test set.
 | L1 Regularization | 87.22% | 89.16% | 84.09% | 86.55% |
 | L2 Regularization | 87.78% | 89.29% | **85.23%** | 87.21% |
 
-### Best Model
+### Model Performance Comparison
+
+![Model Performance Comparison](images/model_comparison.png)
+
+### Confusion Matrices
+
+**1. Baseline Logistic Regression**
+
+![Baseline Confusion Matrix](images/baseline_confusion_matrix.png)
+
+**2. L1 Regularization**
+
+![L1 Confusion Matrix](images/l1_confusion_matrix.png)
+
+**3. L2 Regularization**
+
+![L2 Confusion Matrix](images/l2_confusion_matrix.png)
+
+## Best Performing Model
 
 **Baseline Logistic Regression** achieved the highest F1-score of **87.72%** and accuracy of **88.33%** among the three tested configurations.
 
 Therefore, it was selected as the best-performing model in this experiment.
 
-## Visualizations
-
-The Jupyter Notebook includes:
-
-- Employee Turnover Distribution
-- Baseline Logistic Regression Confusion Matrix
-- L1 Regularization Confusion Matrix
-- L2 Regularization Confusion Matrix
-- Logistic Regression Model Performance Comparison
-
 ## Key Learnings
 
-- Understanding the complete supervised Machine Learning workflow.
-- Handling duplicate records and checking missing values.
-- Separating input features and target variables.
-- Performing stratified train-test splitting.
-- Applying feature scaling with StandardScaler.
-- Understanding Logistic Regression.
-- Comparing L1 and L2 regularization.
-- Evaluating classification models using multiple performance metrics.
-- Interpreting model coefficients and confusion matrices.
+Through this project, I gained practical experience in:
+
+- Data cleaning and preprocessing.
+- Exploratory Data Analysis.
+- Feature engineering.
+- Train-test splitting and stratified sampling.
+- Feature scaling using StandardScaler.
+- Implementing Logistic Regression.
+- Understanding L1 and L2 regularization.
+- Evaluating classification models using multiple metrics.
+- Interpreting confusion matrices and model performance.
 
 ## Limitations
 
 - Model performance was evaluated using a single train-test split.
 - Hyperparameter tuning and cross-validation were not performed.
 - ROC-AUC evaluation was not included.
-- The dataset's original source and real-world representativeness are not documented in the notebook.
+- The dataset's real-world representativeness has not been independently established.
 - The model has not been deployed as a production application.
 
 ## Future Improvements
 
-- Perform cross-validation for more reliable evaluation.
-- Apply hyperparameter tuning to improve model performance.
+- Apply cross-validation for more reliable model evaluation.
+- Perform hyperparameter tuning to improve model performance.
 - Evaluate models using ROC-AUC and ROC curves.
 - Perform deeper feature importance and coefficient analysis.
 - Save the trained model using Joblib.
 - Develop an interactive employee turnover prediction application.
+
+## Conclusion
+
+This project demonstrates how Logistic Regression can be applied to an employee turnover classification problem.
+
+By comparing Baseline, L1, and L2 Logistic Regression, the project highlights the impact of regularization on classification performance.
+
+The Baseline Logistic Regression model achieved the best F1-score among the tested configurations.
 
 ## Author
 
@@ -184,3 +238,5 @@ The Jupyter Notebook includes:
 B.Tech – Computer Science & Engineering
 
 GitHub: [aayush8797823674](https://github.com/aayush8797823674)
+
+GitHub Repository: [ML-Projects](https://github.com/aayush8797823674/ML-Projects)
